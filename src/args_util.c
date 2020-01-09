@@ -24,8 +24,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#include <cmpidt.h>
-#include <cmpift.h>
 #include <cmpimacs.h>
 
 #include "libcmpiutil.h"
@@ -39,10 +37,10 @@ CMPIrc cu_get_str_path(const CMPIObjectPath *reference,
         CMPIData data;
         CMPIStatus s;
         const char *value;
-        
+
         data = CMGetKey(reference, key, &s);
-        if ((s.rc != CMPI_RC_OK) || 
-            CMIsNullValue(data) || 
+        if ((s.rc != CMPI_RC_OK) ||
+            CMIsNullValue(data) ||
             CMIsNullObject(data.value.string))
                 return CMPI_RC_ERR_FAILED;
 
@@ -98,7 +96,7 @@ CMPIrc cu_get_str_arg(const CMPIArgs *args, const char *name, const char **val)
         if ((s.rc != CMPI_RC_OK) || (CMIsNullValue(argdata)))
                 return CMPI_RC_ERR_INVALID_PARAMETER;
 
-        if ((argdata.type != CMPI_string) || 
+        if ((argdata.type != CMPI_string) ||
             CMIsNullObject(argdata.value.string))
                 return CMPI_RC_ERR_TYPE_MISMATCH;
 
@@ -152,7 +150,7 @@ CMPIrc cu_get_array_arg(const CMPIArgs *args,
 {
         CMPIData argdata;
         CMPIStatus s;
-        
+
         argdata = CMGetArg(args, name, &s);
         if ((s.rc != CMPI_RC_OK) || CMIsNullValue(argdata))
                 return CMPI_RC_ERR_INVALID_PARAMETER;
@@ -223,7 +221,7 @@ CMPIrc cu_get_str_prop(const CMPIInstance *inst,
         const char *prop_val;
 
         *target = NULL;
-        
+
         REQUIRE_PROPERTY_DEFINED(inst, prop, value, &s);
 
         if (value.type != CMPI_string)

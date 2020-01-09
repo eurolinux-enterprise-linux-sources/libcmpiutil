@@ -2,7 +2,7 @@
 
 Summary: CMPI Utility Library
 Name: libcmpiutil
-Version: 0.5.4
+Version: 0.5.6
 Release: 1%{?dist}%{?extra_release}
 License: LGPLv2+
 Group: System Environment/Libraries
@@ -20,7 +20,7 @@ Libcmpiutil is a library of utility functions for CMPI providers.
 The goal is to reduce the amount of repetitive work done in
 most CMPI providers by encapsulating common procedures with more
 "normal" APIs.  This extends from operations like getting typed
-instance properties to standardizing method dispatch and argument checking. 
+instance properties to standardizing method dispatch and argument checking.
 
 %package devel
 Summary: Libraries, includes, etc. to use the CMPI utility library
@@ -34,7 +34,7 @@ Includes and documentations for the CMPI utility library
 The goal is to reduce the amount of repetitive work done in
 most CMPI providers by encapsulating common procedures with more
 "normal" APIs.  This extends from operations like getting typed
-instance properties to standardizing method dispatch and argument checking. 
+instance properties to standardizing method dispatch and argument checking.
 
 %prep
 %setup -q
@@ -58,7 +58,7 @@ rm -fr $RPM_BUILD_ROOT
 
 %postun -p /sbin/ldconfig
 
-%files 
+%files
 %defattr(-, root, root, -)
 
 %doc doc/doxygen.conf doc/mainpage README COPYING

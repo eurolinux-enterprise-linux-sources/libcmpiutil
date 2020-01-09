@@ -4,7 +4,7 @@ libdir=${exec_prefix}/lib
 includedir=${prefix}/include/libcmpiutil
 
 Name: libcmpiutil
-Version: 0.5.4
+Version: 0.5.6
 Description: CMPI Utility Library
 Requires:
 Libs: -L${libdir} -lcmpiutil

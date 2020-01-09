@@ -24,10 +24,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#include <cmpidt.h>
-#include <cmpift.h>
-#include <cmpimacs.h>
-
 #include "libcmpiutil.h"
 
 static int log_init = 0;
@@ -55,7 +51,7 @@ void debug_print(char *fmt, ...)
 
         if (log != NULL)
                 vfprintf(log, fmt, ap);
-        
+
         va_end(ap);
 }
 

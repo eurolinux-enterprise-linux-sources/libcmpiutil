@@ -20,12 +20,9 @@
  */
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
-#include <cmpidt.h>
-#include <cmpift.h>
-#include <cmpimacs.h>
-
-#include <libcmpiutil.h>
+#include "libcmpiutil.h"
 
 #define STREQ(a, b) (strcmp(a, b) == 0)
 #define STREQC(a, b) (strcasecmp(a, b) == 0)
@@ -52,7 +49,7 @@ static struct std_ind_filter *get_ind_filter(struct std_ind_filter **list,
                         break;
                 }
         }
-        
+
         if (filter == NULL)
                 CU_DEBUG("get_ind_filter: failed to find %s", ind_name);
 
@@ -79,7 +76,7 @@ static bool is_ind_enabled(struct std_indication_ctx *ctx,
                            "No std_ind_filter for %s", ind_name);
                 goto out;
         }
-        
+
         ret = filter->active;
         if (!ret)
                 CU_DEBUG("Indication '%s' not in active filter", ind_name);
@@ -104,12 +101,12 @@ static CMPIStatus default_raise(const CMPIBroker *broker,
         CMPIStatus s = {CMPI_RC_OK, NULL};
 
         s = CMSetObjectPath(ind, ref);
-        if (s.rc != CMPI_RC_OK) 
+        if (s.rc != CMPI_RC_OK)
                 return s;
 
         CBDeliverIndication(broker,
-                            context, 
-                            NAMESPACE(ref), 
+                            context,
+                            NAMESPACE(ref),
                             ind);
         return s;
 }
@@ -212,7 +209,7 @@ CMPIStatus stdi_set_ind_filter_state(struct std_indication_ctx *ctx,
                            "Provider has no indication '%s'", ind_name);
                 goto out;
         }
-        
+
         filter->active = state;
 
  out:
@@ -229,7 +226,7 @@ CMPIStatus stdi_activate_filter(CMPIIndicationMI* mi,
         CMPIStatus s = {CMPI_RC_OK, NULL};
         struct std_indication_ctx *_ctx;
         const char *cn = NULL;
-        
+
         _ctx = (struct std_indication_ctx *)mi->hdl;
         cn = CLASSNAME(op);
         s = stdi_set_ind_filter_state(_ctx, cn, true);
@@ -400,7 +397,7 @@ CMPIStatus stdi_raise_indication(const CMPIBroker *broker,
                 return s;
 
         CBInvokeMethod(broker, context, op, method, argsin, argsout, &s);
-        
+
         return s;
 }
 

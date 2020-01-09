@@ -42,6 +42,7 @@ AC_DEFUN([CHECK_CMPI],
                 dnl The standard include paths worked.
                 AC_MSG_RESULT(yes)
         else
+                AC_MSG_RESULT(no)
           _DIRS_="/usr/include/cmpi \
                   /usr/local/include/cmpi \
                   $PEGASUS_ROOT/src/Pegasus/Provider/CMPI \
@@ -58,16 +59,18 @@ AC_DEFUN([CHECK_CMPI],
                  if test "$have_CMPI" == "yes"; then
                         dnl Found it
                         AC_MSG_RESULT(yes)
-                        dnl Save the new -I parameter  
+                        dnl Save the new -I parameter
                         CMPI_CPP_FLAGS="$CPPFLAGS"
                         break
-                 fi
+                 else
+                        AC_MSG_RESULT(no)
+		 fi
                  CPPFLAGS=$_cppflags
           done
-        fi      
-        CPPFLAGS="$CMPI_CPP_FLAGS"      
+        fi
+        CPPFLAGS="$CMPI_CPP_FLAGS"
         if test "$have_CMPI" == "no"; then
-                AC_MSG_ERROR(no. Sorry cannot find CMPI headers files.)
+		AC_MSG_ERROR(Cannot find CMPI header files.)
         fi
         ]
 )
@@ -97,7 +100,7 @@ AC_DEFUN([CHECK_BROKEN_CMPIFT],
 #
 AC_DEFUN([CHECK_IND_VOID], [
 	AH_TEMPLATE([CMPI_EI_VOID],
-		    [Defined if return type of EnableIndications 
+		    [Defined if return type of EnableIndications
 		     should be void])
 	AC_MSG_CHECKING([return type for indications])
 	CFLAGS_TMP=$CFLAGS
@@ -107,7 +110,7 @@ AC_DEFUN([CHECK_IND_VOID], [
 		  static void ei(CMPIIndicationMI *mi, const CMPIContext *c) {
 		       return;
 		  }
-		],[ 
+		],[
 		  struct _CMPIIndicationMIFT ft;
 		  ft.enableIndications = ei;
 		  return 0;

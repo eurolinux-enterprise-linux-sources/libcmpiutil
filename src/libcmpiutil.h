@@ -12,12 +12,8 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 #include <cmpidt.h>
-#include <cmpift.h>
-#include <cmpimacs.h>
 
 #define CLASSNAME(op) (CMGetCharPtr(CMGetClassName(op, NULL)))
 #define NAMESPACE(op) (CMGetCharPtr(CMGetNameSpace(op, NULL)))
@@ -48,7 +44,7 @@
 #define CU_STRINGIFY(x) _CU_STRINGIFY(x)
 
 /**
- * Dispatch macro for debug_print, fills in the function name and line number 
+ * Dispatch macro for debug_print, fills in the function name and line number
  * of caller.
  */
 #define CU_DEBUG(fmt, args...) {                                        \
@@ -64,7 +60,7 @@
 void debug_print(char *fmt, ...);
 
 /**
- * Copies a property from one CMPIInstance to another.  If dest_name is NULL, 
+ * Copies a property from one CMPIInstance to another.  If dest_name is NULL,
  * it is assumed to be the same as src_name.
  *
  * @param broker CIM broker, needed for status calls
@@ -73,7 +69,7 @@ void debug_print(char *fmt, ...);
  * @param src_name Name of property to be copied from src_inst
  * @param dest_name Name of property to be copied to dest_inst
  */
-CMPIStatus cu_copy_prop(const CMPIBroker *broker, 
+CMPIStatus cu_copy_prop(const CMPIBroker *broker,
                         CMPIInstance *src_inst, CMPIInstance *dest_inst,
                         char *src_name, char *dest_name);
 
@@ -171,7 +167,7 @@ CMPIrc cu_get_u16_path(const CMPIObjectPath *reference,
  *
  * @param src Source instance
  * @param dest Destination instance
- * @returns {CMPI_RC_OK, NULL} if success, CMPI_RC ERR_FAILED and 
+ * @returns {CMPI_RC_OK, NULL} if success, CMPI_RC ERR_FAILED and
  *          error message otherwise
  */
 CMPIStatus cu_merge_instances(CMPIInstance *src,
@@ -182,7 +178,7 @@ CMPIStatus cu_merge_instances(CMPIInstance *src,
  *
  * @param src Source instance
  * @param dest Destination instance
- * @returns {CMPI_RC_OK, NULL} if success, CMPI_RC ERR_FAILED and 
+ * @returns {CMPI_RC_OK, NULL} if success, CMPI_RC ERR_FAILED and
  *          error message otherwise
  */
 CMPIInstance *cu_dup_instance(const CMPIBroker *broker,
@@ -230,8 +226,8 @@ unsigned int cu_return_instance_names(const CMPIResult *results,
  * @param prop The property name
  * @param target A pointer to a CMPIarray that will be set
  *               if successful
- * @returns 
- *        - CMPI_RC_OK on success, 
+ * @returns
+ *        - CMPI_RC_OK on success,
  *        - CMPI_RC_ERR_NO_SUCH_PROPERTY if prop is not present,
  *        - CMPI_RC_ERR_TYPE_MISMATCH if prop is not an array,
  *        - CMPI_RC_ERROR otherwise
@@ -247,8 +243,8 @@ CMPIrc cu_get_array_prop(const CMPIInstance *inst,
  * @param prop The property name
  * @param target A pointer to a char* that will be set to a malloc'd string
  *               if successful
- * @returns 
- *        - CMPI_RC_OK on success, 
+ * @returns
+ *        - CMPI_RC_OK on success,
  *        - CMPI_RC_ERR_NO_SUCH_PROPERTY if prop is not present,
  *        - CMPI_RC_ERR_TYPE_MISMATCH if prop is not a string,
  *        - CMPI_RC_ERROR otherwise
@@ -263,8 +259,8 @@ CMPIrc cu_get_str_prop(const CMPIInstance *inst,
  * @param inst The instance
  * @param prop The property name
  * @param target A pointer to a bool that will reflect the property status
- * @returns 
- *        - CMPI_RC_OK on success, 
+ * @returns
+ *        - CMPI_RC_OK on success,
  *        - CMPI_RC_ERR_NO_SUCH_PROPERTY if prop is not present,
  *        - CMPI_RC_ERR_TYPE_MISMATCH if prop is not a boolean,
  *        - CMPI_RC_ERROR otherwise
@@ -295,8 +291,8 @@ CMPIrc cu_get_u16_prop(const CMPIInstance *inst,
  * @param inst The instance
  * @param prop The property name
  * @param target A pointer to a uint32_t that will reflect the property value
- * @returns 
- *        - CMPI_RC_OK on success, 
+ * @returns
+ *        - CMPI_RC_OK on success,
  *        - CMPI_RC_ERR_NO_SUCH_PROPERTY if prop is not present,
  *        - CMPI_RC_ERR_TYPE_MISMATCH if prop is not a uint32,
  *        - CMPI_RC_ERROR otherwise
@@ -311,8 +307,8 @@ CMPIrc cu_get_u32_prop(const CMPIInstance *inst,
  * @param inst The instance
  * @param prop The property name
  * @param target A pointer to a uint64_t that will reflect the property value
- * @returns 
- *        - CMPI_RC_OK on success, 
+ * @returns
+ *        - CMPI_RC_OK on success,
  *        - CMPI_RC_ERR_NO_SUCH_PROPERTY if prop is not present,
  *        - CMPI_RC_ERR_TYPE_MISMATCH if prop is not a uint64,
  *        - CMPI_RC_ERROR otherwise
@@ -429,7 +425,7 @@ const char *cu_compare_ref(const CMPIObjectPath *ref,
 
 /**
  * Validate a client given reference against the system instance.
- * This is done by comparing the key values of the reference 
+ * This is done by comparing the key values of the reference
  * against the key properties found in the system instance.
  *
  * @param broker A pointer to the current broker
@@ -444,7 +440,7 @@ CMPIStatus cu_validate_ref(const CMPIBroker *broker,
                            const CMPIInstance *inst);
 
 /**
- * Returns the classname from an instance without forcing user to get 
+ * Returns the classname from an instance without forcing user to get
  * ObjectPath first.
  *
  * @param inst Instance to examine
