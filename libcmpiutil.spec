@@ -2,8 +2,8 @@
 
 Summary: CMPI Utility Library
 Name: libcmpiutil
-Version: 0.5.1
-Release: 1%{?dist}%{?extra_release}.1
+Version: 0.5.4
+Release: 1%{?dist}%{?extra_release}
 License: LGPLv2+
 Group: System Environment/Libraries
 Source: ftp://libvirt.org/libvirt-cim/libcmpiutil-%{version}.tar.gz
@@ -75,6 +75,12 @@ rm -fr $RPM_BUILD_ROOT
 %doc doc/SubmittingPatches
 
 %changelog
+* Wed Jan 12 2011 Daniel Veillard <veillard@redhat.com> - 0.5.4-1
+- update to new version to fix problems in libvirt-cim rebase
+- Resolves: rhbz#633332
+- fix a packaging naming problem on previous build
+- Resolves: rhbz#604551
+
 * Tue Jan 19 2010 Daniel Veillard <veillard@redhat.com> - 0.5.1-1
 - update to new version after problems being found in 0.5 release
 - Resolves: rhbz#556807

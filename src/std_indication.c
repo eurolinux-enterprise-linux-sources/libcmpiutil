@@ -98,13 +98,15 @@ static CMPIStatus trigger(struct std_indication_ctx *ctx,
 
 static CMPIStatus default_raise(const CMPIBroker *broker,
                                 const CMPIContext *context,
+                                const CMPIObjectPath *ref,
                                 CMPIInstance *ind)
 {
-        CMPIObjectPath *ref;
         CMPIStatus s = {CMPI_RC_OK, NULL};
 
-        ref = CMGetObjectPath(ind, NULL);
-        
+        s = CMSetObjectPath(ind, ref);
+        if (s.rc != CMPI_RC_OK) 
+                return s;
+
         CBDeliverIndication(broker,
                             context, 
                             NAMESPACE(ref), 
@@ -114,13 +116,15 @@ static CMPIStatus default_raise(const CMPIBroker *broker,
 
 static CMPIStatus raise(struct std_indication_ctx *ctx,
                         const CMPIContext *context,
-                        const CMPIArgs *argsin)
+                        const CMPIArgs *argsin,
+                        const CMPIObjectPath *ref)
 {
         bool enabled;
         CMPIInstance *inst;
         CMPIStatus s = {CMPI_RC_OK, NULL};
         const char *ind_name = NULL;
 
+        CU_DEBUG("In raise");
         if (cu_get_inst_arg(argsin, "TheIndication", &inst) != CMPI_RC_OK) {
                 cu_statusf(ctx->brkr, &s,
                            CMPI_RC_ERR_FAILED,
@@ -136,6 +140,8 @@ static CMPIStatus raise(struct std_indication_ctx *ctx,
                 goto out;
         }
 
+        CU_DEBUG("Indication is %s", ind_name);
+
         enabled = is_ind_enabled(ctx, ind_name, &s);
         if (s.rc != CMPI_RC_OK) {
                 CU_DEBUG("Problem checking enabled: '%s'", CMGetCharPtr(s.msg));
@@ -146,13 +152,14 @@ static CMPIStatus raise(struct std_indication_ctx *ctx,
                 goto out;
 
         if (ctx->handler == NULL || ctx->handler->raise_fn == NULL)
-                s = default_raise(ctx->brkr, context, inst);
+                s = default_raise(ctx->brkr, context, ref, inst);
         else
-                s = ctx->handler->raise_fn(ctx->brkr, context, inst);
+                s = ctx->handler->raise_fn(ctx->brkr, context, ref, inst);
 
  out:
         return s;
 }
+
 CMPIStatus stdi_deliver(const CMPIBroker *broker,
                         const CMPIContext *ctx,
                         struct ind_args *args,
@@ -305,12 +312,13 @@ CMPIStatus stdi_handler(CMPIMethodMI *self,
         if (STREQC(methodname, "TriggerIndications"))
                 s = trigger(ctx, context);
         else if (STREQ(methodname, "RaiseIndication"))
-                s = raise(ctx, context, argsin);
+                s = raise(ctx, context, argsin, reference);
         else
                 cu_statusf(ctx->brkr, &s,
                            CMPI_RC_ERR_FAILED,
                            "Invalid method");
 
+        CMReturnDone(results);
         return s;
 }
 
@@ -369,8 +377,15 @@ CMPIStatus stdi_raise_indication(const CMPIBroker *broker,
         CMPIArgs *argsout;
 
         op = CMNewObjectPath(broker, ns, type, &s);
-        if (s.rc != CMPI_RC_OK)
+        if ((op == NULL) || (s.rc != CMPI_RC_OK)) {
+                CU_DEBUG("Unable to create path for indication %s",
+                         type);
+                cu_statusf(broker, &s,
+                           CMPI_RC_ERR_FAILED,
+                           "Unable to create path for indication %s",
+                           type);
                 return s;
+        }
 
         argsin = CMNewArgs(broker, &s);
         if (s.rc != CMPI_RC_OK)
@@ -385,7 +400,7 @@ CMPIStatus stdi_raise_indication(const CMPIBroker *broker,
                 return s;
 
         CBInvokeMethod(broker, context, op, method, argsin, argsout, &s);
-
+        
         return s;
 }
 

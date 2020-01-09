@@ -41,6 +41,7 @@
 
 typedef CMPIStatus (*raise_indication_t)(const CMPIBroker *broker,
                                          const CMPIContext *ctx,
+                                         const CMPIObjectPath *ref,
                                          const CMPIInstance *ind);
 
 typedef CMPIStatus (*trigger_indication_t)(const CMPIContext *ctx);

@@ -2,11 +2,11 @@
 
 Summary: CMPI Utility Library
 Name: libcmpiutil
-Version: 0.5.1
+Version: 0.5.4
 Release: 1%{?dist}%{?extra_release}
 License: LGPLv2+
 Group: System Environment/Libraries
-Source: ftp://libvirt.org/libvirt-cim/libcmpiutil-%{version}.tar.gz
+Source: libcmpiutil-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 URL: http://libvirt.org/CIM/
 BuildRequires: tog-pegasus-devel
@@ -75,27 +75,5 @@ rm -fr $RPM_BUILD_ROOT
 %doc doc/SubmittingPatches
 
 %changelog
-* Sun Jan 17 2010 Kaitlin Rupert <kaitlin@us.ibm.com> - 0.5.1-1
-- Updated to official 0.5.1 source release
-
-* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
-
-* Wed Jul 15 2009 Kaitlin Rupert <kaitlin@us.ibm.com> - 0.5-1
-- Updated to official 0.5 source release
-
-* Tue May 20 2008 Dan Smith <danms@us.ibm.com> - 0.4-1
-- Updated to official 0.4 source release
-
-* Fri Feb 29 2008 Dan Smith <danms@us.ibm.com> - 0.3-1
-- Updated to official 0.3 source release
-
-* Wed Feb 13 2008 Dan Smith <danms@us.ibm.com> - 0.2-1
-- Updated to official 0.2 source release
-
-* Fri Nov 30 2007 Dan Smith <danms@us.ibm.com> - 0.1-6
-- Updated to official 0.1 source release
-- Added Source0 URL
-
 * Fri Oct 26 2007 Daniel Veillard <veillard@redhat.com> - 0.1-1
 - created
