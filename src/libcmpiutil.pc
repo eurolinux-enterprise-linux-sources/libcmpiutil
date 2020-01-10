@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/libcmpiutil
+
+Name: libcmpiutil
+Version: 0.5.7
+Description: CMPI Utility Library
+Requires:
+Libs: -L${libdir} -lcmpiutil
+Cflags: -I${includedir}
