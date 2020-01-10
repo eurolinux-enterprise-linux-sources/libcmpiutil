@@ -3,7 +3,7 @@
 Summary: CMPI Utility Library
 Name: libcmpiutil
 Version: 0.5.7
-Release: 1%{?dist}%{?extra_release}
+Release: 3%{?dist}%{?extra_release}
 License: LGPLv2+
 Group: System Environment/Libraries
 Source: ftp://libvirt.org/libvirt-cim/libcmpiutil-%{version}.tar.gz
@@ -78,6 +78,12 @@ rm -fr $RPM_BUILD_ROOT
 %doc doc/SubmittingPatches
 
 %changelog
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 0.5.7-3
+- Mass rebuild 2014-01-24
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 0.5.7-2
+- Mass rebuild 2013-12-27
+
 * Mon Apr 15 2013 Daniel Veillard <veillard@redhat.com> 0.5.7-1
 - update to 0.5.7 upstream release
 
